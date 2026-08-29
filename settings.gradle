@@ -1,7 +1,6 @@
 rootProject.name = 'game-marketplace-dis'
 
-// Moduli ce se dodavati kako budemo pravili svaki mikroservis
-// include 'catalog-service'
+include 'catalog-service'
 // include 'inventory-service'
 // include 'order-service'
 // include 'payment-service'
