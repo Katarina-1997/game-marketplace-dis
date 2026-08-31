@@ -2,6 +2,6 @@ rootProject.name = 'game-marketplace-dis'
 
 include 'catalog-service'
 include 'inventory-service'
-// include 'order-service'
+include 'order-service'
 // include 'payment-service'
 // include 'store-composite-service'
