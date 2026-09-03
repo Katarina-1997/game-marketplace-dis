@@ -1,11 +1,10 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM gradle:9.1.0-jdk17-alpine AS build
 
 WORKDIR /app
 
 COPY . .
 
-RUN chmod +x ./gradlew
-RUN ./gradlew :payment-service:bootJar -x test
+RUN gradle :payment-service:bootJar -x test --no-daemon
 
 FROM eclipse-temurin:17-jre-alpine
 

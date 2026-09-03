@@ -10,6 +10,16 @@ services:
     networks:
       - marketplace-network
 
+  config-server:
+    build:
+      context: .
+      dockerfile: config-server/Dockerfile
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - marketplace-network
+
   eureka-server:
     build:
       context: .
@@ -17,6 +27,8 @@ services:
     container_name: eureka-server
     ports:
       - "8761:8761"
+    depends_on:
+      - config-server
     networks:
       - marketplace-network
 
@@ -28,11 +40,13 @@ services:
     ports:
       - "8081:8081"
     environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
       - SPRING_MONGODB_HOST=mongodb
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
     depends_on:
       - mongodb
       - eureka-server
+      - config-server
     networks:
       - marketplace-network
 
@@ -44,11 +58,13 @@ services:
     ports:
       - "8082:8082"
     environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
       - SPRING_MONGODB_HOST=mongodb
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
     depends_on:
       - mongodb
       - eureka-server
+      - config-server
     networks:
       - marketplace-network
 
@@ -60,11 +76,13 @@ services:
     ports:
       - "8083:8083"
     environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
       - SPRING_MONGODB_HOST=mongodb
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
     depends_on:
       - mongodb
       - eureka-server
+      - config-server
     networks:
       - marketplace-network
 
@@ -76,11 +94,13 @@ services:
     ports:
       - "8084:8084"
     environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
       - SPRING_MONGODB_HOST=mongodb
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
     depends_on:
       - mongodb
       - eureka-server
+      - config-server
     networks:
       - marketplace-network
 
@@ -92,9 +112,11 @@ services:
     ports:
       - "8085:8085"
     environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
     depends_on:
       - eureka-server
+      - config-server
       - catalog-service
       - inventory-service
       - order-service
