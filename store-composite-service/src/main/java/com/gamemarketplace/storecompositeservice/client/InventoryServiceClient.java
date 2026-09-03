@@ -8,7 +8,7 @@ import com.gamemarketplace.storecompositeservice.dto.OwnedGameDto;
 @Component
 public class InventoryServiceClient {
 
-    private static final String INVENTORY_SERVICE_URL = "http://localhost:8082/api/inventory";
+	private static final String INVENTORY_SERVICE_URL = "http://inventory-service/api/inventory";
 
     private final RestTemplate restTemplate;
 

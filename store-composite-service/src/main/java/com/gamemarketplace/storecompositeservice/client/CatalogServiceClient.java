@@ -8,7 +8,7 @@ import com.gamemarketplace.storecompositeservice.dto.GameDto;
 @Component
 public class CatalogServiceClient {
 
-    private static final String CATALOG_SERVICE_URL = "http://localhost:8081/api/games";
+	private static final String CATALOG_SERVICE_URL = "http://catalog-service/api/games";
 
     private final RestTemplate restTemplate;
 

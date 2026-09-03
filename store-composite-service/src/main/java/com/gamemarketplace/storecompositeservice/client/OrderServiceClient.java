@@ -8,7 +8,7 @@ import com.gamemarketplace.storecompositeservice.dto.OrderDto;
 @Component
 public class OrderServiceClient {
 
-    private static final String ORDER_SERVICE_URL = "http://localhost:8083/api/orders";
+	private static final String ORDER_SERVICE_URL = "http://order-service/api/orders";
 
     private final RestTemplate restTemplate;
 

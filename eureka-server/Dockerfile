@@ -5,14 +5,14 @@ WORKDIR /app
 COPY . .
 
 RUN chmod +x ./gradlew
-RUN ./gradlew :inventory-service:bootJar -x test
+RUN ./gradlew :eureka-server:bootJar -x test
 
 FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-COPY --from=build /app/inventory-service/build/libs/*.jar app.jar
+COPY --from=build /app/eureka-server/build/libs/*.jar app.jar
 
-EXPOSE 8082
+EXPOSE 8761
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
