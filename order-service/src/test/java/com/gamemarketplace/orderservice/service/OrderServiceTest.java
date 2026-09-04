@@ -2,6 +2,7 @@ package com.gamemarketplace.orderservice.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.cloud.stream.function.StreamBridge;
 
 import com.gamemarketplace.orderservice.entity.Order;
 import com.gamemarketplace.orderservice.entity.OrderStatus;
@@ -25,11 +27,14 @@ class OrderServiceTest {
     @Mock
     private OrderRepository orderRepository;
 
+    @Mock
+    private StreamBridge streamBridge;
+
     private OrderService orderService;
 
     @BeforeEach
     void setUp() {
-        orderService = new OrderService(orderRepository);
+        orderService = new OrderService(orderRepository, streamBridge);
     }
 
     @Test
@@ -53,6 +58,7 @@ class OrderServiceTest {
 
         assertEquals(OrderStatus.PENDING, result.getStatus());
         verify(orderRepository).save(order);
+        verify(streamBridge).send(eq("orderCreated-out-0"), any());
     }
 
     @Test

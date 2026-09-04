@@ -10,6 +10,15 @@ services:
     networks:
       - marketplace-network
 
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - marketplace-network
+
   config-server:
     build:
       context: .
@@ -61,10 +70,12 @@ services:
       - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
       - SPRING_MONGODB_HOST=mongodb
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - mongodb
       - eureka-server
       - config-server
+      - rabbitmq
     networks:
       - marketplace-network
 
@@ -79,10 +90,12 @@ services:
       - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
       - SPRING_MONGODB_HOST=mongodb
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - mongodb
       - eureka-server
       - config-server
+      - rabbitmq
     networks:
       - marketplace-network
 
@@ -97,10 +110,12 @@ services:
       - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
       - SPRING_MONGODB_HOST=mongodb
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - mongodb
       - eureka-server
       - config-server
+      - rabbitmq
     networks:
       - marketplace-network
 
