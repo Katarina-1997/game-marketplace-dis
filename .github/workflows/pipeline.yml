@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew build -x test
 
       - name: Run unit tests
-        run: ./gradlew test --tests "*ServiceTest"
+        run: ./gradlew test --tests "*ServiceTest" --continue
 
   docker-build:
     runs-on: ubuntu-latest
